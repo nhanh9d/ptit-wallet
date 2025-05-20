@@ -59,8 +59,12 @@ cd src
 - Báo cáo: xem số dư, lịch sử giao dịch, tổng hợp
 - Hiển thị QR code OTP trực tiếp trên terminal
 
-## Thành viên
-- (Điền tên, công việc từng thành viên)
+## Thành viên & Phân công
+| Họ tên      | Công việc chính                                  |
+|------------|--------------------------------------------------|
+| **Thanh**      | Phát triển chức năng quản lý (manager), backup, báo cáo |
+| **Quang**      | Phát triển chức năng người dùng (user), OTP, giao dịch  |
+| **Nhật Anh**   | Phân tích yêu cầu, tạo boilerplate, build script, main entry, tích hợp hệ thống |
 
 ## Tham khảo
 - [CPP_OTP](https://github.com/patzol768/cpp-otp)
@@ -80,6 +84,35 @@ cd src
 - `users.txt`: lưu thông tin user, manager
 - `transactions.txt`: lưu lịch sử giao dịch
 - `backup/`: thư mục chứa bản sao lưu
+
+## Phân tích & Đặc tả chức năng
+- **Lưu trữ dữ liệu:**
+  - Tất cả user, manager lưu chung 1 file `users.txt` để dễ quản lý, backup, tránh trùng lặp.
+  - Giao dịch lưu ở `transactions.txt`. Backup tự động vào thư mục `backup/`.
+- **Bảo mật:**
+  - Mật khẩu được hash trước khi lưu (không lưu plain text).
+  - OTP chuẩn TOTP, xác thực 2 lớp khi đổi thông tin quan trọng.
+- **Luồng chính:**
+  - Đăng ký/đăng nhập, phân quyền user/manager.
+  - User thao tác với ví cá nhân, manager thao tác với toàn hệ thống.
+  - Giao dịch chuyển điểm kiểm tra số dư, xác thực OTP, ghi log.
+  - Backup/restore dữ liệu, báo cáo tổng hợp.
+- **Lý do chọn thiết kế:**
+  - Lưu file chung giúp dễ backup, dễ kiểm soát, phù hợp bài tập lớn nhóm nhỏ.
+  - Hash password, OTP giúp tăng bảo mật, sát thực tế.
+
+## Quy tắc commit & minh chứng đóng góp
+- Mỗi thành viên khi hoàn thành chức năng phải commit với message rõ ràng, ví dụ:
+  - `[manager] Thanh: Thêm chức năng backup/restore`
+  - `[user] Quang: Hoàn thiện xác thực OTP khi đổi mật khẩu`
+  - `[core] Nhật Anh: Tạo Makefile, build script, tích hợp QR code`
+- Mỗi commit nên gắn tên người thực hiện để GV dễ kiểm tra đóng góp.
+- Khi nộp bài, đảm bảo lịch sử commit thể hiện rõ quá trình làm việc của từng thành viên.
+
+## Lưu ý chấm điểm & báo cáo
+- Khi demo, mỗi thành viên cần nắm rõ phần mình làm và tổng thể hệ thống.
+- Nếu thành viên không có commit hoặc không trả lời được phần mình làm sẽ bị trừ điểm nặng theo quy định.
+- Không sao chép mã nguồn giữa các nhóm.
 
 ---
 
